@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="300" height="300">
+  <defs>
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4f46e5" />
+      <stop offset="100%" stop-color="#7c3aed" />
+    </linearGradient>
+    
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="rgba(0,0,0,0.2)" />
+    </filter>
+  </defs>
+  
+  <!-- Фон -->
+  <rect width="300" height="300" rx="20" fill="url(#gradient)" />
+  
+  <!-- Игровое поле -->
+  <g transform="translate(75, 75)" filter="url(#shadow)">
+    <!-- Вертикальные линии -->
+    <line x1="50" y1="0" x2="50" y2="150" stroke="white" stroke-width="6" stroke-linecap="round" />
+    <line x1="100" y1="0" x2="100" y2="150" stroke="white" stroke-width="6" stroke-linecap="round" />
+    
+    <!-- Горизонтальные линии -->
+    <line x1="0" y1="50" x2="150" y2="50" stroke="white" stroke-width="6" stroke-linecap="round" />
+    <line x1="0" y1="100" x2="150" y2="100" stroke="white" stroke-width="6" stroke-linecap="round" />
+    
+    <!-- Крестики и нолики -->
+    <!-- Крестик (левый верхний) -->
+    <g transform="translate(25, 25)">
+      <line x1="-15" y1="-15" x2="15" y2="15" stroke="#f87171" stroke-width="8" stroke-linecap="round" />
+      <line x1="15" y1="-15" x2="-15" y2="15" stroke="#f87171" stroke-width="8" stroke-linecap="round" />
+    </g>
+    
+    <!-- Нолик (левый средний) -->
+    <circle cx="25" cy="75" r="15" stroke="#60a5fa" stroke-width="8" fill="none" />
+    
+    <!-- Крестик (левый нижний) -->
+    <g transform="translate(25, 125)">
+      <line x1="-15" y1="-15" x2="15" y2="15" stroke="#f87171" stroke-width="8" stroke-linecap="round" />
+      <line x1="15" y1="-15" x2="-15" y2="15" stroke="#f87171" stroke-width="8" stroke-linecap="round" />
+    </g>
+    
+    <!-- Нолик (средний верхний) -->
+    <circle cx="75" cy="25" r="15" stroke="#60a5fa" stroke-width="8" fill="none" />
+    
+    <!-- Крестик (центр) -->
+    <g transform="translate(75, 75)">
+      <line x1="-15" y1="-15" x2="15" y2="15" stroke="#f87171" stroke-width="8" stroke-linecap="round" />
+      <line x1="15" y1="-15" x2="-15" y2="15" stroke="#f87171" stroke-width="8" stroke-linecap="round" />
+    </g>
+    
+    <!-- Нолик (правый верхний) -->
+    <circle cx="125" cy="25" r="15" stroke="#60a5fa" stroke-width="8" fill="none" />
+    
+    <!-- Пустая клетка (средний нижний) -->
+    <!-- Оставлена пустой -->
+    
+    <!-- Крестик (правый средний) -->
+    <g transform="translate(125, 75)">
+      <line x1="-15" y1="-15" x2="15" y2="15" stroke="#f87171" stroke-width="8" stroke-linecap="round" />
+      <line x1="15" y1="-15" x2="-15" y2="15" stroke="#f87171" stroke-width="8" stroke-linecap="round" />
+    </g>
+  </g>
+  
+  <!-- Текст "Tic Tac Toe" -->
+  <text x="150" y="260" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white">
+    TIC TAC TOE
+  </text>
+  
+  <!-- Декоративные элементы -->
+  <circle cx="40" cy="40" r="10" fill="white" fill-opacity="0.2" />
+  <circle cx="260" cy="260" r="8" fill="white" fill-opacity="0.2" />
+  <circle cx="260" cy="40" r="12" fill="white" fill-opacity="0.2" />
+  <circle cx="40" cy="260" r="6" fill="white" fill-opacity="0.2" />
+</svg>
