@@ -90,6 +90,7 @@ async def get_current_user(
 
 CurrentUserDep = Annotated[UserReadWithoutPassword, Depends(get_current_user)]
 
+
 def verify_internal_service_key(
     key: str = Header(alias="X-Internal-Service-Key"),
 ) -> str:
