@@ -50,12 +50,12 @@ services:
     container_name: vue-frontend
     restart: unless-stopped
     ports:
-      - "127.0.0.1:3000:80"  # Изменил expose на ports, чтобы фронт был доступен в браузере
+      - "127.0.0.1:3000:80"
     environment:
-      VITE_API_URL: "http://146.0.72.85" # Должен быть доступен клиенту (браузеру)
-      VITE_CLOUDINARY_NAME: "dfs5mvxnz"
-      VITE_CLOUDINARY_API_SECRET: "FYBEEAia1zJy0UIvV2paQZEbSJc"
-      VITE_CLOUDINARY_API_KEY: "193954773367713"
+      VITE_API_URL: ${VITE_API_URL}
+      VITE_CLOUDINARY_NAME: ${VITE_CLOUDINARY_NAME}
+      VITE_CLOUDINARY_API_SECRET: ${VITE_CLOUDINARY_API_SECRET}
+      VITE_CLOUDINARY_API_KEY: ${VITE_CLOUDINARY_API_KEY}
     networks:
       - app-network
 
@@ -73,6 +73,16 @@ services:
       - postgres_data:/var/lib/postgresql/data
     networks:
       - app-network
+
+  migration:
+    image: amacneil/dbmate
+    volumes:
+      - ./services/api-service/db/migrations:/migrations
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@db:5432/tic-tac-toe
+    command: up
+    depends_on:
+      - db
 
   redis:
     image: redis:7-alpine
