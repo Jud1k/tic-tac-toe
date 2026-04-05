@@ -5,15 +5,15 @@ WORKDIR /app
 
 COPY package.json bun.lock /app/
 
-COPY frontend/package.json /app/frontend/
+COPY package.json .
 
 WORKDIR /app/frontend
 
 RUN bun install
 
-COPY frontend /app/frontend
+COPY . .
 
-RUN bun run build
+RUN bun run build-only
 
 
 # Stage 1, based on Nginx, to have only the compiled app, ready for production with Nginx

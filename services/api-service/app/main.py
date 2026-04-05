@@ -29,11 +29,15 @@ app.include_router(prefix="/api/v1", router=api_router)
 
 origins = [
     "http://localhost:5173",
+   "http://146.0.72.85",
+  "https://146.0.72.85",
+ "http://localhost",
+    "https://localhost"
 ]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

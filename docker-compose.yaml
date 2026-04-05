@@ -4,9 +4,10 @@ services:
     container_name: fastapi-service
     restart: unless-stopped
     env_file:
-      - services/.env
+      - .env
     environment:
-      DATABASE_URL: ${DATABASE_URL}
+      PYTHONPATH: /app    
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/tic-tac-toe
       REDIS_HOST: redis
       REDIS_PORT: 6379
       INTERNAL_SERVICE_KEY: ${INTERNAL_SERVICE_KEY}
@@ -16,10 +17,9 @@ services:
       ALGORITHM: ${ALGORITHM}
       SECRET_KEY: ${SECRET_KEY}
     volumes:
-      - ./backend-fastapi:/app
       - /app/__pycache__
-    expose:
-      - "8000"
+    ports:
+      - "127.0.0.1:8000:8000"
     depends_on:
       - db
       - redis
@@ -28,7 +28,7 @@ services:
 
   go-service:
     env_file:
-      - services/.env
+      - .env
     build: ./services/socket-server
     container_name: go-service
     restart: unless-stopped
@@ -36,8 +36,8 @@ services:
       GIN_MODE: release
       REDIS_ADDR: redis:6379
       FASTAPI_URL: http://fastapi:8000
-    expose:
-      - "8080"
+    ports:
+      - "127.0.0.1:8080:8080"
     depends_on:
       - redis
     networks:
@@ -45,14 +45,14 @@ services:
 
   frontend:
     env_file:
-      - frontend/.env
+      - .env
     build: ./frontend
     container_name: vue-frontend
     restart: unless-stopped
     ports:
-      - "80:80"  # Изменил expose на ports, чтобы фронт был доступен в браузере
+      - "127.0.0.1:3000:80"  # Изменил expose на ports, чтобы фронт был доступен в браузере
     environment:
-      VITE_API_URL: "http://localhost:8000" # Должен быть доступен клиенту (браузеру)
+      VITE_API_URL: "http://146.0.72.85" # Должен быть доступен клиенту (браузеру)
       VITE_CLOUDINARY_NAME: "dfs5mvxnz"
       VITE_CLOUDINARY_API_SECRET: "FYBEEAia1zJy0UIvV2paQZEbSJc"
       VITE_CLOUDINARY_API_KEY: "193954773367713"
@@ -64,7 +64,7 @@ services:
     container_name: postgres-db
     restart: unless-stopped
     env_file:
-      - services/.env
+      - .env
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}

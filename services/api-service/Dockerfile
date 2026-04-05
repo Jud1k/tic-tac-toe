@@ -27,11 +27,11 @@ RUN --mount=type=cache,target=/root/.cache/uv \
     --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
     uv sync --frozen --no-install-workspace --package app
 
-COPY ./api-service/scripts /app/api-service/scripts
+COPY scripts /app/api-service/scripts
 
-COPY ./api-service/pyproject.toml ./api-service/alembic.ini /app/api-service/
+COPY pyproject.toml /app/api-service/
 
-COPY ./api-service/app /app/api-service/app
+COPY app /app/api-service/app
 
 # Sync the project
 # Ref: https://docs.astral.sh/uv/guides/integration/docker/#intermediate-layers
