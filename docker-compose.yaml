@@ -44,23 +44,19 @@ services:
       - app-network
 
   frontend:
-    env_file:
-      - .env
     build: ./frontend
     container_name: vue-frontend
-    restart: unless-stopped
-    ports:
-      - "127.0.0.1:3000:80"
+    restart: "no"
     environment:
       VITE_API_URL: ${VITE_API_URL}
       VITE_CLOUDINARY_NAME: ${VITE_CLOUDINARY_NAME}
       VITE_CLOUDINARY_API_SECRET: ${VITE_CLOUDINARY_API_SECRET}
       VITE_CLOUDINARY_API_KEY: ${VITE_CLOUDINARY_API_KEY}
-    networks:
-      - app-network
+    volumes:    
+      - ./frontend/dist:/output
 
   db:
-    image: postgres:15-alpine
+    image: postgres:18-alpine
     container_name: postgres-db
     restart: unless-stopped
     env_file:
@@ -71,18 +67,26 @@ services:
       POSTGRES_DB: ${POSTGRES_DB:-tic-tac-toe}
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d tic-tac-toe"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
     networks:
       - app-network
 
   migration:
     image: amacneil/dbmate
+    networks:
+      - app-network
     volumes:
       - ./services/api-service/db/migrations:/migrations
     environment:
-      DATABASE_URL: postgres://postgres:postgres@db:5432/tic-tac-toe
-    command: up
+      DATABASE_URL: postgres://postgres:postgres@db:5432/tic-tac-toe?sslmode=disable
+    command: ["--migrations-dir", "/migrations", "up"]
     depends_on:
-      - db
+        db:
+          condition: service_healthy
 
   redis:
     image: redis:7-alpine
